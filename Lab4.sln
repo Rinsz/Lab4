@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RationalFraction", "RationalFraction\RationalFraction.csproj", "{1BD6EDA6-C24E-484F-A18A-C2698872C0B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{FE48E75B-FD83-455C-A67E-522EF17F2D57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BD6EDA6-C24E-484F-A18A-C2698872C0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD6EDA6-C24E-484F-A18A-C2698872C0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD6EDA6-C24E-484F-A18A-C2698872C0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD6EDA6-C24E-484F-A18A-C2698872C0B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE48E75B-FD83-455C-A67E-522EF17F2D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE48E75B-FD83-455C-A67E-522EF17F2D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE48E75B-FD83-455C-A67E-522EF17F2D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE48E75B-FD83-455C-A67E-522EF17F2D57}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
