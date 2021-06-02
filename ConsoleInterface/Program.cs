@@ -15,7 +15,7 @@ namespace ConsoleInterface
             var cmd = "default";
             while (!string.IsNullOrEmpty(cmd))
             {
-                Console.WriteLine("Enter command: ");
+                Console.WriteLine("Enter command or expression: ");
                 cmd = Console.ReadLine()?.Trim();
                 
                 if (Regex.IsMatch(cmd, FractionExpressionRegexPattern))
@@ -27,8 +27,9 @@ namespace ConsoleInterface
                 switch (cmd)
                 {
                     case "rational-to-periodic": ConvertRationalToPeriodic(); break;
-                    default: Console.WriteLine("Wrong command. Type 'help' to see all available commands.");
-                        break;
+                    case "help": Console.WriteLine("'rational-to-periodic' - converts rational fraction to periodic\n" +
+                                                   "expression in format x/y + a/b. Separating whitespaces are necessary"); break;
+                    default: Console.WriteLine("Wrong command. Type 'help' to see all available commands."); break;
                 }
             }
         }
