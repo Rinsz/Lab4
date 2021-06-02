@@ -58,10 +58,10 @@ namespace ConsoleInterface
 
             switch (expressionParts[1])
             {
-                case "+" : Console.WriteLine(leftArgument + rightArgument); break;
-                case "-" : Console.WriteLine(leftArgument - rightArgument); break;
-                case "/" : Console.WriteLine(leftArgument / rightArgument); break;
-                case "*" : Console.WriteLine(leftArgument * rightArgument); break;
+                case "+" : Console.WriteLine($"{leftArgument + rightArgument}\n"); break;
+                case "-" : Console.WriteLine($"{leftArgument - rightArgument}\n"); break;
+                case "/" : Console.WriteLine($"{leftArgument / rightArgument}\n"); break;
+                case "*" : Console.WriteLine($"{leftArgument * rightArgument}\n"); break;
                 default: throw new Exception("Wrong operation");
             }
         }

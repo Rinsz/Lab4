@@ -15,7 +15,7 @@ namespace Lab4.PeriodicFractions
             WholePart = wholePart;
             NonPeriodicPart = nonPeriodicPart;
             PeriodicPart = periodicPart;
-            this.sign = wholePart > 0 && sign == 1 ? 1 : 0;
+            this.sign = wholePart > 0 && sign == 1 ? 1 : -1;
         }
 
         public static PeriodicFraction Zero => 
@@ -31,7 +31,7 @@ namespace Lab4.PeriodicFractions
         {
             if (string.IsNullOrEmpty(PeriodicPart) && string.IsNullOrEmpty(NonPeriodicPart))
                 return WholePart.ToString();
-            return $"{(WholePart == 0 && sign == -1 ? "-" : "")}" +
+            return $"{(sign == -1 ? "-" : "")}" +
                    $"{WholePart}.{NonPeriodicPart}" + (string.IsNullOrEmpty(PeriodicPart) ? "" : $"({PeriodicPart})");
         } 
         
