@@ -1,10 +1,13 @@
 ﻿using System.Numerics;
+using System.Text.RegularExpressions;
 using Lab4.Exceptions;
 
 namespace Lab4.RationalFractions
 {
     public partial struct RationalFraction
     {
+        private const string FractionRegexPattern = @"\d+[\/]\d+";
+
         public BigInteger Numerator { get; private set; }
         public BigInteger Denominator { get; private set; }
         
@@ -39,5 +42,18 @@ namespace Lab4.RationalFractions
 
         public override string ToString() =>
             $"{Numerator}/{Denominator}";
+
+        public static bool TryParse(string str, out RationalFraction fraction)
+        {
+            if (!Regex.IsMatch(str, FractionRegexPattern))
+            {
+                fraction = Zero;
+                return false;
+            }
+            
+            var parts = str.Split('\\', '/');
+            fraction = new RationalFraction(BigInteger.Parse(parts[0]), BigInteger.Parse(parts[1]));
+            return true;
+        }
     }
 }

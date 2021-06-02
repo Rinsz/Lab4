@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Numerics;
-using Lab4.PeriodicFractions;
+using System.Text.RegularExpressions;
 using Lab4.RationalFractions;
 using Lab4.RationalFractions.Extensions;
 
@@ -8,66 +7,59 @@ namespace ConsoleInterface
 {
     class Program
     {
+        private const string FractionExpressionRegexPattern = "^-*\\d+[\\/\\\\]-*\\d+ [-+\\*\\/] -*\\d+[\\/\\\\]-*\\d+$";
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter command: ");
-            var command = Console.ReadLine();
-
-            while (!string.IsNullOrEmpty(command))
+            Console.WriteLine("To see all available commands type 'help'...");
+            var cmd = "default";
+            while (!string.IsNullOrEmpty(cmd))
             {
-                switch (command)
+                Console.WriteLine("Enter command: ");
+                cmd = Console.ReadLine()?.Trim();
+                
+                if (Regex.IsMatch(cmd, FractionExpressionRegexPattern))
                 {
-                    case "help" : break;
-                    case "rational-to-periodic" : RationalToPeriodic(); break;
-                    case "periodic-to-rational" : PeriodicToRational(); break;
-                    case "rational-calculator" : Calculator(); break;
-                    default: Console.WriteLine("Invalid command. Enter 'help' to see availiable commands"); break;
+                    SolveExpression(cmd);
+                    continue;
+                }
+                
+                switch (cmd)
+                {
+                    case "rational-to-periodic": ConvertRationalToPeriodic(); break;
+                    default: Console.WriteLine("Wrong command. Type 'help' to see all available commands.");
+                        break;
                 }
             }
-            var a = new RationalFraction(BigInteger.Parse("87"), 
-                BigInteger.Parse("107"));
-            var periodic = a.ToPeriodicFraction(100);
-            Console.WriteLine(periodic);
-            var rational = periodic.ConvertToRational();
-            Console.WriteLine($"Rational: {rational}");
         }
 
-        private static void Calculator()
+        private static void ConvertRationalToPeriodic()
         {
-            Console.WriteLine("Enter first rational fraction in format 'numerator/denominator'");
-            throw new NotImplementedException();
+            Console.WriteLine("Enter fraction to convert: ");
+            var frac = Console.ReadLine();
+            if(RationalFraction.TryParse(frac, out var fraction))
+                Console.WriteLine(fraction.ToPeriodicFraction());
+            else
+                throw new Exception("Wrong fraction");
         }
 
-        private static void PeriodicToRational()
+        private static void SolveExpression(string cmd)
         {
-            Console.WriteLine("Enter periodic fraction in format '1.23(456)': ");
-            var source = Console.ReadLine();
-            if (string.IsNullOrEmpty(source))
-                return;
-            var parts = source.Split('.');
-            var whole = parts[0];
-            if(parts.Length == 1)
-                Console.WriteLine(new PeriodicFraction(BigInteger.Parse(whole), "", "").ConvertToRational());
-            var fractParts = parts[1].Split('(', ')');
+            cmd = cmd.Trim();
+            var expressionParts = cmd.Split(' ');
+            if (!RationalFraction.TryParse(expressionParts[0], out var leftArgument))
+                throw new Exception("Wrong left argument");
+            if (!RationalFraction.TryParse(expressionParts[2], out var rightArgument))
+                throw new Exception("Wrong right argument");
 
-        }
-
-        private static void RationalToPeriodic()
-        {
-            Console.WriteLine("Enter rational fraction in format 'numerator/denominator': ");
-            var source = Console.ReadLine();
-            if (string.IsNullOrEmpty(source))
-                return;
-            var parts = source.Split('/');
-
-            if (parts.Length != 2)
+            switch (expressionParts[1])
             {
-                Console.WriteLine("Wrong format");
-                return;
+                case "+" : Console.WriteLine(leftArgument + rightArgument); break;
+                case "-" : Console.WriteLine(leftArgument - rightArgument); break;
+                case "/" : Console.WriteLine(leftArgument / rightArgument); break;
+                case "*" : Console.WriteLine(leftArgument * rightArgument); break;
+                default: throw new Exception("Wrong operation");
             }
-            
-            Console.WriteLine(
-                $"Periodic or decimal value: {new RationalFraction(BigInteger.Parse(parts[0]), BigInteger.Parse(parts[1])).ToPeriodicFraction()}");
         }
     }
 }

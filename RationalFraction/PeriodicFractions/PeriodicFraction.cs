@@ -10,20 +10,12 @@ namespace Lab4.PeriodicFractions
         
         private int sign;
 
-        public PeriodicFraction(BigInteger wholePart, string nonPeriodicPart, string periodicPart)
+        public PeriodicFraction(BigInteger wholePart, string nonPeriodicPart, string periodicPart, int sign = 1)
         {
             WholePart = wholePart;
             NonPeriodicPart = nonPeriodicPart;
             PeriodicPart = periodicPart;
-            sign = wholePart >= 0 ? 1 : -1;
-        }
-        
-        internal PeriodicFraction(BigInteger wholePart, string nonPeriodicPart, string periodicPart, int sign)
-        {
-            WholePart = wholePart * sign;
-            NonPeriodicPart = nonPeriodicPart;
-            PeriodicPart = periodicPart;
-            this.sign = sign;
+            this.sign = wholePart > 0 && sign == 1 ? 1 : 0;
         }
 
         public static PeriodicFraction Zero => 
