@@ -6,7 +6,7 @@ namespace Lab4.RationalFractions
 {
     public partial struct RationalFraction
     {
-        private const string FractionRegexPattern = @"\d+[\/]\d+";
+        private const string FractionRegexPattern = @"-*\d+[\/]-*\d+";
 
         public BigInteger Numerator { get; private set; }
         public BigInteger Denominator { get; private set; }
