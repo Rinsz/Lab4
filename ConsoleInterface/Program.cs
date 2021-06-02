@@ -38,8 +38,11 @@ namespace ConsoleInterface
         {
             Console.WriteLine("Enter fraction to convert: ");
             var frac = Console.ReadLine();
+            Console.WriteLine("Enter amount of signs after the comma");
+            var signs = int.Parse(Console.ReadLine());
+            
             if(RationalFraction.TryParse(frac, out var fraction))
-                Console.WriteLine(fraction.ToPeriodicFraction());
+                Console.WriteLine(fraction.ToPeriodicFraction(signs));
             else
                 throw new Exception("Wrong fraction");
         }
