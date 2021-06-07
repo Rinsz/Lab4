@@ -34,6 +34,7 @@ namespace ConsoleInterface
                     case "rational-to-periodic": ConvertRationalToPeriodic(); break;
                     case "periodic-to-rational": ConvertPeriodicToRational(); break;
                     case "help": Console.WriteLine("'rational-to-periodic' - converts rational fraction to periodic\n" +
+                                                   "'periodic-to-rational' - converts periodic or decimal fraction to rational\n" +
                                                    "expression in format x/y + a/b. Separating whitespaces are necessary"); break;
                     default: Console.WriteLine("Wrong command. Type 'help' to see all available commands."); break;
                 }
