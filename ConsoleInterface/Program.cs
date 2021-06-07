@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Numerics;
 using System.Text.RegularExpressions;
+using Lab4.PeriodicFractions;
 using Lab4.RationalFractions;
 using Lab4.RationalFractions.Extensions;
 
@@ -8,6 +10,9 @@ namespace ConsoleInterface
     class Program
     {
         private const string FractionExpressionRegexPattern = "^-*\\d+[\\/\\\\]-*\\d+ [-+\\*\\/] -*\\d+[\\/\\\\]-*\\d+$";
+        private const string PeriodicFractionRegexPattern = @"^-?\d+[.,]\d*(\(\d+\))?$";
+        private const string DecimalFractionRegexPattern = @"^-?\d+[.,]\d+$";
+        private const string SimplePeriodicFractionRegexPattern = @"^-?\d+[.,](\(\d+\))$";
 
         static void Main(string[] args)
         {
@@ -15,7 +20,7 @@ namespace ConsoleInterface
             var cmd = "default";
             while (!string.IsNullOrEmpty(cmd))
             {
-                Console.WriteLine("Enter command or expression: ");
+                Console.WriteLine("\nEnter command or expression: ");
                 cmd = Console.ReadLine()?.Trim();
                 
                 if (Regex.IsMatch(cmd, FractionExpressionRegexPattern))
@@ -27,11 +32,54 @@ namespace ConsoleInterface
                 switch (cmd)
                 {
                     case "rational-to-periodic": ConvertRationalToPeriodic(); break;
+                    case "periodic-to-rational": ConvertPeriodicToRational(); break;
                     case "help": Console.WriteLine("'rational-to-periodic' - converts rational fraction to periodic\n" +
                                                    "expression in format x/y + a/b. Separating whitespaces are necessary"); break;
                     default: Console.WriteLine("Wrong command. Type 'help' to see all available commands."); break;
                 }
             }
+        }
+
+        private static void ConvertPeriodicToRational()
+        {
+            Console.WriteLine("Enter periodic fraction: ");
+            var fraction = Console.ReadLine()?.Trim();
+            if (!Regex.IsMatch(fraction, PeriodicFractionRegexPattern))
+            {
+                Console.WriteLine("Fraction does not match pattern");
+                Console.WriteLine("Availible patterns:\nPeriodic: x.(y)\nDecimal: x.y\nPeriodic with decimal x.y(z)");
+                return;
+            }
+
+            var parts = fraction.Split('.',',');
+            var whole = parts[0];
+            var nonPeriodic = null as string;
+            var periodic = null as string;
+
+            if (Regex.IsMatch(fraction, DecimalFractionRegexPattern))
+            {
+                nonPeriodic = parts[1];
+                var frac = new PeriodicFraction(BigInteger.Parse(whole), nonPeriodic, periodic,
+                    whole[0] == '-' ? -1 : 1);
+                Console.WriteLine(frac.ConvertToRational());
+                return;
+            }
+
+            if (Regex.IsMatch(fraction, SimplePeriodicFractionRegexPattern))
+            {
+                periodic = parts[1].Trim('(', ')');
+                var frac = new PeriodicFraction(BigInteger.Parse(whole), nonPeriodic, periodic,
+                    whole[0] == '-' ? -1 : 1);
+                Console.WriteLine(frac.ConvertToRational());
+                return;
+            }
+
+            var fractionalParts = parts[1].Split('(');
+            nonPeriodic = fractionalParts[0];
+            periodic = fractionalParts[1].Trim('(', ')');
+            var periodicFraction =
+                new PeriodicFraction(BigInteger.Parse(whole), nonPeriodic, periodic, whole[0] == '-' ? -1 : 1);
+            Console.WriteLine(periodicFraction.ConvertToRational());
         }
 
         private static void ConvertRationalToPeriodic()
