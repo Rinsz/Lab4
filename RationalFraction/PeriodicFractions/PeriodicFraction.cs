@@ -15,7 +15,7 @@ namespace Lab4.PeriodicFractions
             WholePart = wholePart;
             NonPeriodicPart = nonPeriodicPart;
             PeriodicPart = periodicPart;
-            this.sign = wholePart > 0 && sign == 1 ? 1 : -1;
+            this.sign = wholePart >= 0 && sign == 1 ? 1 : -1;
         }
 
         public static PeriodicFraction Zero => 
